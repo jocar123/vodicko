@@ -1,6 +1,6 @@
 # Vodičko
 
-**Vodičko** je savremena veb aplikacija projektovana za potrebe turističkih agencija, lokalnih turoperatora i organizatora putovanja. Sistem služi kao centralna platforma koja digitalizuje rad agencije kroz nekoliko ključnih funkcija:
+**Vodičko** je veb aplikacija projektovana za potrebe turističkih agencija, lokalnih turoperatora i organizatora putovanja. Sistem služi kao centralna platforma koja digitalizuje rad agencije kroz nekoliko ključnih funkcija:
 
 * **Upravljanje aranžmanima:** Brzo i lako online kreiranje, izmena i pregled turističkih tura i geografskih destinacija.
 * **Napredna pretraga:** Pametan sistem filtera koji klijentima omogućava brzo pronalaženje putovanja prema ceni, datumu ili lokaciji.

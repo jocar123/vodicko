@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vodičko</title>
+  <link rel="stylesheet" href="{{ asset('css/addTour.css') }}">
+</head>
+<body>
+  <header>
+    <div class="logo-section">
+      <a href="{{ route('home') }}"> <img src="{{ asset('images/logo.png') }}" alt="Vodicko Logo"> </a>
+    </div>
+    <form method="POST" action="{{ route('logout') }}">
+      {{ csrf_field() }}
+      <button type="submit">Logout</button>
+    </form>
+    {% if isManager %}
+      <a href="{{ route('tour.create') }}" class="btn-dodaj">Dodaj turu</a>
+    {% endif %}
+  </header>
+
+  <div class="add-tour-container">
+    <h2>Dodaj novu turu</h2>
+
+    <form action="{{ route('tour.store') }}" method="POST" enctype="multipart/form-data">
+    {{ csrf_field() }}
+
+    <div class="form-group">
+        <label for="title">Naziv ture:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Opis:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="capacity">Kapacitet:</label>
+        <input type="number" id="capacity" name="capacity" min="1" required>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Cena (RSD):</label>
+        <input type="number" id="price" name="price" min="0" required>
+    </div>
+
+    <div class="form-group">
+        <label for="start_date">Datum početka:</label>
+        <input type="date" id="start_date" name="start_date" required>
+    </div>
+
+    <div class="form-group">
+        <label for="end_date">Datum završetka:</label>
+        <input type="date" id="end_date" name="end_date" required>
+    </div>
+
+    <div class="form-group">
+        <label>Destinacije:</label><br>
+        {% for dest in destinations %}
+            <label>
+                <input type="checkbox" name="destinations[]" value="{{ dest.destination_id }}">
+                {{ dest.name }}
+            </label><br>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="thumbnail">Thumbnail:</label>
+        <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
+    </div>
+
+    <button type="submit" class="btn btn-success">Dodaj turu</button>
+</form>
+
+</div>
+
+</body>
+</html>

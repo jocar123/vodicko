@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ tour.title }}</title>
+    <link rel="stylesheet" href="{{ asset('css/tour.css') }}">
+</head>
+<body>
+  <header>
+    <div class="logo-section">
+      <a href="{{ route('home') }}"> <img src="{{ asset('images/logo.png') }}" alt="Vodicko Logo"> </a>
+    </div>
+  </header>
+
+  <div class="tour-wrapper">
+    <div class="tour-main">
+        <img src="{{ asset('images/' ~ tour.thumbnail) }}" alt="{{ tour.title }}">
+        <div class="tour-info">
+            <h1>{{ tour.title }}</h1>
+            <p>{{ tour.description }}</p>
+            <p><strong>Cena:</strong> {{ tour.price }} €</p>
+            <p><strong>Broj Slobodnih mesta:</strong> {{ tour.users|length }}/{{ tour.capacity }}</p>
+            <p><strong>Trajanje:</strong> {{  tour.start_date|date('d.m.Y') }} → {{ tour.end_date|date('d.m.Y') }}</p>
+
+            <h3>Destinacije:</h3>
+            <ul>
+              {% for dest in tour.destinations %}
+                <li>{{ dest.name }}</li>
+              {% endfor %}
+            </ul>
+
+           {% if isLoggedIn %}
+            {% if isRegistered %}
+                <form action="{{ route('tour.removeUserFromTour', {'tourId': tour.tour_id}) }}" method="POST">
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn-odjavi">Odjavi se</button>
+                </form>
+            {% elseif isFull %}
+                <button disabled>Nema mesta</button>
+            {% else %}
+                <form action="{{ route('tour.addUserToTour', {'tourId': tour.tour_id}) }}" method="POST">
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn-prijavi">Prijavi se</button>
+                </form>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="tour-registrations">
+        <h3>Prijavljeni:</h3>
+        <ul>
+        {% for u in users %}
+          <li>{{ u.name }} {{ u.surname }} </li>
+        {% endfor %}
+      </ul>
+    </div>
+</div>
+</body>
+</html>

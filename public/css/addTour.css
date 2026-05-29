@@ -1,0 +1,129 @@
+body {
+  margin: 0;
+  font-family: "DejaVu Sans", Arial, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+}
+
+header {
+  background: #2e7d32;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-section img {
+  width:6em;
+  height:5em;
+}
+
+header img {
+  height: 50px;
+  transition: transform 0.2s ease;
+}
+
+header img:hover {
+  transform: scale(1.05);
+}
+
+header form {
+  margin: 0;
+}
+
+header button {
+  background: #e53935;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+header button:hover {
+  background: #c62828;
+}
+
+header .btn-dodaj {
+  margin-left: 1rem;
+  background: #ffca28;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+header .btn-dodaj:hover {
+  background: #ffb300;
+}
+
+.add-tour-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.add-tour-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2e7d32;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2e7d32;
+  outline: none;
+}
+
+button.btn-success {
+  width: 100%;
+  padding: 0.8rem;
+  background: #2e7d32;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button.btn-success:hover {
+  background: #256628;
+}
+

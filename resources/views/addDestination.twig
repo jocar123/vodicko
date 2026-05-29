@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <title>Vodičko</title>
+  <link rel="stylesheet" href="{{ asset('css/addTour.css') }}">
+</head>
+<body>
+  <header>
+    <div class="logo-section">
+      <a href="{{ route('home') }}">
+        <img src="{{ asset('images/logo.png') }}" alt="Vodicko Logo">
+      </a>
+    </div>
+    <form method="POST" action="{{ route('logout') }}">
+      {{ csrf_field() }}
+      <button type="submit">Logout</button>
+    </form>
+    {% if isManager %}
+      <a href="{{ route('tour.create') }}" class="btn-dodaj">Dodaj turu</a>
+    {% endif %}
+  </header>
+
+  <div class="add-tour-container">
+    <h2>Dodaj novu destinaciju</h2>
+
+    {% if errors %}
+        <div class="alert alert-danger">
+            <ul>
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form action="{{ route('destination.store') }}" method="POST">
+        {{ csrf_field() }}
+        
+        <div class="form-group">
+            <label for="name">Naziv destinacije:</label>
+            <input type="text" name="name" id="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Opis:</label>
+            <textarea name="description" id="description" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-success">Dodaj destinaciju</button>
+    </form>
+  </div>
+
+</body>
+</html>

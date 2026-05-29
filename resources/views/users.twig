@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vodičko</title>
+    <link rel="stylesheet" href="{{ asset('css/users.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo-section">
+        <a href="{{ route('home') }}"> <img style="max-width:100px" src="{{ asset('images/logo.png') }}" alt="Vodicko Logo"> </a>
+        </div>
+    </header>
+    <h2>Lista korisnika</h2>
+    {% if currentUser.isAdmin() %}
+    <form method="GET" action="{{ route('users.exportUsers') }}" style="position:absolute; right:20px; top:20px;">
+        <button type="submit" style="
+            padding: 8px 15px;
+            border: 1px solid #28a745;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        ">Preuzmi Excel</button>
+    </form>
+    <form method="GET" action="{{ route('users.exportPdf') }}" style="position:absolute; right:200px; top:20px;">
+        <button type="submit" style="
+            padding: 8px 15px;
+            border: 1px solid #28a745;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        ">Preuzmi PDF</button>
+    </form>
+    {% endif %}
+    <form method="GET" action="{{ route('users.show') }}">
+        <input type="text" name="search" placeholder="Pretraga po korisničkom imenu ili emailu"
+            value="{{ app.request.get('search') }}">
+        <button type="submit">Pretraži</button>
+    </form>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                {% if user != currentUser and not (currentUser.isManager() and user.isAdmin()) %}
+                <tr>
+                    <td>{{ user.user_id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if currentUser.isAdmin() or currentUser.isManager() %}
+                            <form method="POST" action="{{ route('users.delete', {id: user.user_id}) }}" style="display:inline;">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button type="submit" onclick="return confirm('Obrisati korisnika?')">Obriši</button>
+                            </form>
+                        {% endif %}
+
+                        {% if currentUser.isAdmin() %}
+                            {% if not user.isManager() %}
+                                <form method="POST" action="{{ route('users.addManager', {'id': user.user_id}) }}" style="display:inline;">
+                                    {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
+                                    <button type="submit" onclick="return confirm('Dodati korisnika kao menadžera?')">Dodaj za menadžera</button>
+                                </form>
+                            {% else %}
+                                <form method="POST" action="{{ route('users.removeManager', {'id': user.user_id}) }}" style="display:inline;">
+                                    {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
+                                    <button type="submit" onclick="return confirm('Ukloniti menadžera?')">Ukloni kao menadžera</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="4">Nema korisnika.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

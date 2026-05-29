@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vodičko</title>
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo-section">
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('images/logo.png') }}" alt="Vodicko Logo">
+            </a>
+        </div>
+
+        {% if isAdmin %}
+            <a href="{{ route('tour.create') }}" class="btn-manager">Dodaj turu</a>
+            <a href="{{ route('destination.create') }}" class="btn-manager">Dodaj destinaciju</a>
+        {% endif %}
+
+        {% if isManager or isAdmin %}
+            <a href="{{ route('users.show') }}" class="btn-manager">Lista korisnika</a>
+            <a href="{{ route('usersInTours.show') }}" class="btn-manager">Lista korisnika za svaku turu</a>
+        {% endif %}
+
+        <form method="POST" action="{{ route('logout') }}">
+            {{ csrf_field() }}
+            <button type="submit">Logout</button>
+        </form>
+    </header>
+
+    <main>
+        <aside class="filters">
+            <h4>Filtriraj</h4>
+            <form method="GET" action="{{ route('home') }}">
+                <label for="name">Ime</label>
+                <input type="text" id="name" name="name">
+
+                <label for="start">Datum početka</label>
+                <input type="date" id="start" name="start">
+
+                <label for="end">Datum kraja</label>
+                <input type="date" id="end" name="end">
+
+                <button type="submit">Primeni filter</button>
+            </form>
+        </aside>
+
+        <section class="content">
+            <div class="sort">
+                <form method="GET" action="{{ homeRoute }}">
+                    <label for="sort">Sortiraj:</label>
+                      <select id="sort" name="sort" onchange="this.form.submit()">
+                          <option value="" disabled {% if currentSort is empty %}selected{% endif %}>-- Izaberi --</option>
+
+                          <option value="price_asc" {% if currentSort == 'price_asc' %}selected{% endif %}>Cena rastuća</option>
+                          <option value="price_desc" {% if currentSort == 'price_desc' %}selected{% endif %}>Cena opadajuća</option>
+
+                          <option value="capacity_asc" {% if currentSort == 'capacity_asc' %}selected{% endif %}>Kapacitet rastući</option>
+                          <option value="capacity_desc" {% if currentSort == 'capacity_desc' %}selected{% endif %}>Kapacitet opadajući</option>
+
+                          <option value="start_date_asc" {% if currentSort == 'start_date_asc' %}selected{% endif %}>Datum rastući</option>
+                          <option value="start_date_desc" {% if currentSort == 'start_date_desc' %}selected{% endif %}>Datum opadajući</option>
+                      </select>
+                </form>
+            </div>
+
+            <div class="tours">
+                {% for tour in tours %}
+                    <div style="position: relative;">
+                      {% if isAdmin %}
+                        <form method="POST" action="{{ route('tour.destroy', {'id': tour.tour_id}) }}" 
+                              style="position: absolute; top: 5px; right: 5px; z-index: 2;">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" style="
+                                background: red;
+                                color: white;
+                                border: none;
+                                border-radius: 10%;
+                                width: 25px;
+                                height: 25px;
+                                cursor: pointer;
+                                font-weight: bold;
+                                line-height: 1;
+                                padding: 0;
+                            ">X</button>
+                        </form>
+                      {% endif %}
+                        <a href="{{ route('tour.show', {'id': tour.tour_id}) }}" style="text-decoration:none; display: block;">
+                            <div class="tour">
+                                <img src="{{ asset('images/' ~ tour.thumbnail) }}" alt="{{ tour.title }}">
+                                <div class="tour-info">
+                                    <div class="tour-wrapper">
+                                        <h3>{{ tour.title }}</h3>
+                                        <h3> | </h3>
+                                        <h3>{{ tour.start_date|date('d.m.Y') }} - {{ tour.end_date|date('d.m.Y') }}</h3>
+                                    </div>
+                                    <p>Cena: {{ tour.price }}€</p>
+                                    <p>Kapacitet: {{ tour.capacity }}</p>
+                                    <hr style="width:100%;">
+                                    <p>{{ tour.description }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% else %}
+                    <p>Nema dostupnih tura.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

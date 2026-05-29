@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Vodičko</title>
+<head>
+    <link rel="stylesheet" href="{{ asset('css/userTour.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo-section">
+        <a href="{{ route('home') }}"> <img style="max-width:100px" src="{{ asset('images/logo.png') }}" alt="Vodicko Logo"> </a>
+        </div>
+    </header>
+    <h2>Lista tura i prijavljenih korisnika</h2>
+
+    {% if currentUser.isAdmin() %}
+    <form method="GET" action="{{ route('users.exportUsersInTours') }}" style="position:absolute; right:20px; top:20px;">
+        <button type="submit" style="
+            padding: 8px 15px;
+            border: 1px solid #28a745;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        ">Preuzmi Excel</button>
+    </form>
+
+    <form method="GET" action="{{ route('users.exportUsersInToursPdf') }}" style="position:absolute; right:200px; top:20px;">
+        <button type="submit" style="
+            padding: 8px 15px;
+            border: 1px solid #28a745;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        ">Preuzmi PDF</button>
+    </form>
+    {% endif %}
+
+    <form method="GET" action="{{ route('usersInTours.show') }}" style="margin-bottom:20px;">
+        <input type="text" name="search" placeholder="Pretraži ture..."
+            value="{{ app.request.get('search') }}">
+        <button type="submit">Pretraži</button>
+    </form>
+
+    {% for tour in tours %}
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+            <h3>{{ tour.title }} ({{ tour.start_date|date("d.m.Y") }} - {{ tour.end_date|date("d.m.Y") }})</h3>
+            
+
+            {% if tour.users|length > 0 %}
+                <ul>
+                    {% for user in tour.users %}
+                        <li>{{ user.name }} ({{ user.email }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Nema prijavljenih korisnika.</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>Nema rezultata za prikaz.</p>
+    {% endfor %}
+
+    <div class="pagination">
+        {{ tours.links('pagination::simple-tailwind')|raw }}
+    </div>
+</body>
+</html>

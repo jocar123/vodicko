@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vodičko</title>
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Register</h2>
+        {% if errors is defined and errors.any %}
+            <div style="color:red">
+                <ul>
+                    {% for field, fieldErrors in errors.getMessages %}
+                        {% for message in fieldErrors %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+
+
+        <form method="POST" action="{{ route('register.submit') }}">
+            {{ csrf_field() }}
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="surname" placeholder="Surname" required>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="date" name="dob" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="phone_number" placeholder="Phone Number" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>

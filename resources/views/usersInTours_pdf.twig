@@ -1,0 +1,35 @@
+<h2>Korisnici u turama</h2>
+<head>
+<style>
+    body {
+        font-family: 'DejaVu Sans', sans-serif;
+    }
+</style>
+<meta charset="UTF-8">
+</head>
+{% for tour in tours %}
+    <h3>{{ tour.title }}</h3>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Ime korisnika</th>
+                <th>Prezime korisnika</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in tour.users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Nema korisnika prijavljenih za ovu turu.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+{% endfor %}

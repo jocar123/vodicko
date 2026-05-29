@@ -1,0 +1,146 @@
+header {
+  background: #2e7d32;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-section img {
+  width:6em;
+  height:5em;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0px;
+    color: #333;
+}
+
+.tour-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.tour-main {
+    flex: 2;
+    display: flex;
+    gap: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.tour-main img {
+    min-width: 550px;
+    min-height: 450px;
+    max-width: 550px;
+    max-height: 450px;
+    border-radius: 6px;
+    height: auto;
+    object-fit: cover;
+}
+
+.tour-info h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.tour-info p {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.tour-info p strong {
+    color: #000;
+}
+
+.tour-info h3 {
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #222;
+}
+
+.tour-info ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 5px 0;
+}
+
+.tour-info ul li {
+    font-size: 0.95rem;
+}
+
+.tour-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-home {
+    background-color: #555;
+}
+
+.btn-prijavi {
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: #00d0ff;
+}
+
+.btn-odjavi {
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: #cd221c;
+}
+
+.tour-registrations {
+    flex: 1;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.tour-registrations h3 {
+    margin-bottom: 10px;
+}
+
+.tour-registrations ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.tour-registrations ul li {
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+    .tour-wrapper, .tour-main {
+        flex-direction: column;
+    }
+
+    .tour-main img {
+        max-width: 100%;
+    }
+}
